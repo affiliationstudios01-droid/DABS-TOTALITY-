@@ -1,1 +1,34 @@
-{"dependencies":{"@temporalio/activity":"^1.11.0","@temporalio/client":"^1.11.0","@temporalio/worker":"^1.11.0","@temporalio/workflow":"^1.11.0","bullmq":"^5.0.0","ioredis":"^5.4.0"},"description":"DABS-TOTALITY- hybrid orchestration scaffold: BullMQ (high-frequency/scheduled) + Temporal (durable purchase saga) + input-mesh v80 (SQL batch/interval automation, connector manifest, narrative registry). SCAFFOLD ONLY — not deployed, not tested against live services.","devDependencies":{"@types/node":"^24.0.0","typescript":"^5.6.0"},"engines":{"node":">=24"},"name":"webhook-receiver","packageManager":"pnpm@9","private":true,"scripts":{"build":"tsc -p tsconfig.json","mesh:sql":"psql \"$DATABASE_URL\" -f mesh/sql/001_mesh_v80.sql","start":"node dist/app.js","typecheck":"tsc -p tsconfig.json --noEmit","worker:bullmq":"node dist/workers/index.js","worker:temporal":"node dist/temporal/worker.js"},"type":"module","version":"1.0.0"}
+{
+  "dependencies": {
+    "@temporalio/activity": "^1.11.0",
+    "@temporalio/client": "^1.11.0",
+    "@temporalio/worker": "^1.11.0",
+    "@temporalio/workflow": "^1.11.0",
+    "bullmq": "^5.0.0",
+    "ioredis": "^5.4.0",
+    "express": "^5.0.1",
+    "standardwebhooks": "^1.0.0"
+  },
+  "description": "DABS-TOTALITY- hybrid orchestration scaffold: BullMQ (high-frequency/scheduled) + Temporal (durable purchase saga) + input-mesh v80 (SQL batch/interval automation, connector manifest, narrative registry). SCAFFOLD ONLY — not deployed, not tested against live services.",
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.6.0",
+    "@types/express": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "name": "webhook-receiver",
+  "packageManager": "pnpm@9",
+  "private": true,
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "mesh:sql": "psql \"$DATABASE_URL\" -f mesh/sql/001_mesh_v80.sql",
+    "start": "node dist/app.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "worker:bullmq": "node dist/workers/index.js",
+    "worker:temporal": "node dist/temporal/worker.js"
+  },
+  "type": "module",
+  "version": "1.0.0"
+}
