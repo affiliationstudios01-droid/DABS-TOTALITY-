@@ -1,0 +1,26 @@
+# Render Blueprint — DABS / Totality Webhook Receiver (standalone Web Service)
+# Separate from the DABS-TOTALITY- Workflow service: workflows register tasks
+# and have no public URL; this service is the public webhook endpoint.
+services:
+  - type: web
+    name: dabs-webhook-receiver
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      # Secrets — set values in the Render dashboard; never commit them.
+      - key: RENDER_WEBHOOK_SECRET
+        sync: false
+      - key: RENDER_API_TOKEN
+        sync: false
+      - key: ADMIN_API_KEY
+        generateValue: true
+      - key: HUBSPOT_ACCESS_TOKEN
+        sync: false
+      # Non-secret configuration
+      - key: SEVEN_SINS_ENGINE_URL
+        value: https://seven-sins-ops-engine.onrender.com
+      - key: SEVEN_SINS_INGEST_PATH
+        value: /api/events/ingest
