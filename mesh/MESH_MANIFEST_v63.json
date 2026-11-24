@@ -1,0 +1,69 @@
+{
+  "protocol": "INPUT-MESH-INTEGRATE-ACTIVATE-SYNC-EXECUTE",
+  "version_spine": "v1-v3-v9-v15-v23-v35-v49-v54-v63-v7-air",
+  "source_of_truth": "https://github.com/affiliationstudios01-droid/DABS-TOTALITY-",
+  "calibrated_at": "2026-11-24T06:44:00Z",
+  "operator": "Affiliation Studios / seven-sins-ops-engine",
+  "status": "configured_calibrated_not_deployed",
+  "layers": {
+    "INPUT": {
+      "webhooks": ["stripe", "shopify", "square", "render"],
+      "catalog_csv": "mesh/catalog_playaz_playmakers.csv",
+      "notes": "Mentor Tee supplied as Size S only; no invented variants"
+    },
+    "MESH": {
+      "nodes": [
+        { "id": "airtable", "module": "mesh/airtable.ts", "role": "ops_ledger_sync" },
+        { "id": "shopify_catalog", "module": "mesh/catalog_playaz_playmakers.csv", "role": "product_truth" },
+        { "id": "dabs_receiver", "repo": "DABS-TOTALITY-", "role": "webhook_ingress" }
+      ]
+    },
+    "INTEGRATE": {
+      "ledger": "7-way 20/20/20/10/10/10/10 integer cents largest-remainder",
+      "margin_guard": "configurable floor — do not treat 91.3% as production default",
+      "product_handles": [
+        "playaz-ball-championship-hoodie",
+        "playaz-ball-game-day-tee",
+        "playaz-ball-snapback",
+        "playmakers-association-mentor-tee"
+      ]
+    },
+    "ACTIVATE": {
+      "telemetry": "telemetry/instrumentation.ts",
+      "grafana_provisioner": "scripts/provision_grafana_dashboard.sh",
+      "workflows": "workflows/tasks/main.py (fulfill_order, post_ledger, route_payout)"
+    },
+    "SYNC": {
+      "airtable": "syncToAirtable() idempotent on external_id (source_system:source_event_id:bucket_code)",
+      "shopify": "CSV import only — no automatic overwrite of existing SKUs",
+      "github": "DABS-TOTALITY- is public SoT; private engine commits separately"
+    },
+    "EXECUTE": {
+      "state": "not_live",
+      "blockers": [
+        "Commit mesh + telemetry files to GitHub",
+        "Set OTEL + Airtable + Stripe env on Render",
+        "Run 7-way ledger migration in Supabase staging",
+        "Import catalog CSV with Overwrite unchecked",
+        "Complete Mentor Tee variants if more sizes exist"
+      ]
+    }
+  },
+  "catalog_summary": {
+    "products": 4,
+    "variants": 11,
+    "vendors": ["Playaz Ball", "Playmakers Association"],
+    "claims_unverified": [
+      "Gelato POD worldwide shipping",
+      "Organic cotton",
+      "Portion of proceeds supports youth programs"
+    ]
+  },
+  "guardrails": [
+    "GitHub commits are truth; chat is not deployment",
+    "Pending crypto/card purchases are not settled funds",
+    "Do not move money against pending settlement",
+    "No bots authorized for fund transfers without explicit controls",
+    "Margin floors must be measured, not assumed"
+  ]
+}
