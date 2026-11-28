@@ -1,15 +1,16 @@
 services:
-- type: web
-  name: webhook-receiver
-  runtime: node
-  repo: https://github.com/render-examples/webhook-receiver
-  branch: main
-  plan: starter
-  envVars:
-  - key: RENDER_API_TOKEN
-    sync: false
-  - key: RENDER_WEBHOOK_SECRET
-    sync: false
-  region: oregon
-  buildCommand: pnpm install && pnpm run build
-  startCommand: pnpm run start
+  - type: web
+    name: webhook-receiver
+    runtime: node
+    repo: https://github.com/affiliationstudios01-droid/DABS-TOTALITY-
+    branch: main
+    plan: starter
+    healthCheckPath: /health
+    envVars:
+      - key: RENDER_API_TOKEN
+        sync: false
+      - key: RENDER_WEBHOOK_SECRET
+        sync: false
+    region: oregon
+    buildCommand: pnpm install && pnpm run build
+    startCommand: pnpm run start
